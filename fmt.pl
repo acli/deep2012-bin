@@ -48,6 +48,26 @@ sub new_monolog ($;$) {
     }
 }
 
+sub start_boilerplate () {
+    print <<EOT;
+<article class=transcript>
+<section class=setdown id=intro>
+</section>
+<section class=main-speaker id=speech>
+EOT
+}
+
+sub end_boilerplate () {
+    print <<EOT;
+</section>
+<section id=qa>
+</section>
+</article>
+EOT
+}
+
+start_boilerplate;
+
 for (my $bom_removed = 0;;) {
     my $s = scalar <>;
 last unless defined $s;
@@ -70,3 +90,4 @@ last unless defined $s;
     }
 }
 end_monolog;
+end_boilerplate;
