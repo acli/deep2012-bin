@@ -24,7 +24,7 @@ sub escape ($;$) {
     # Note use of i. em is wrong in this context.
     my $tag = $narration_mode? 'div': 'span';
     my $spacing = $narration_mode? "\n\n": '';
-    $s =~ s {(\[)\s*(applause|inaudible)\s*(\])}
+    $s =~ s {(\[)\s*(applause|inaudible|not able to hear video)\s*(\])}
 	    {<$tag class=narration>$spacing\1<i>\2<\/i>\3$spacing<\/$tag>}i;
     return $s;
 }
@@ -36,15 +36,15 @@ sub end_monolog () {
 
 sub new_monolog ($;$) {
     my($utterance, $speaker) = @_;
-    my $prev_speaker = $monolog;
     end_monolog if defined $monolog;
-    my $tag = defined $speaker? "$speaker:": '';
-    printf("<div class=monolog>\n\n>>%s %s\n",
-	    escape($tag), escape($utterance));
     if (defined $speaker) {
+	printf("<div class=monolog>\n\n>><span class=speaker>%s</span>: %s\n",
+		escape($speaker), escape($utterance));
 	$monolog = $speaker;
     } else {
-	$monolog = defined $prev_speaker? $prev_speaker: 0;
+	printf("<div class=monolog>\n\n>> %s\n",
+		escape($utterance));
+	$monolog = 0;
     }
 }
 
