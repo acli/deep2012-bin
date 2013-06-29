@@ -29,7 +29,8 @@ sub fixcase ($) {
     # Plain guesses
     $s =~ s/\b(i)(?:-|‑)(pad|phone)\b/\1\u\2/sgi;
     $s =~ s/\b(3d|i)\b/\U\1/sg;
-    $s =~ s/\b(jutta|pina|toronto)\b/ fix_proper_name($1) /sge;
+    $s =~ s/\b(u\.s\.)/\U\1/sg;
+    $s =~ s/\b(donovan|jutta|mike|pina|toronto|treviranus|walgreen)\b/ fix_proper_name($1) /sge;
     return $s;
 }
 
