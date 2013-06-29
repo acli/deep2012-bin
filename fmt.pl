@@ -24,7 +24,7 @@ sub escape ($;$) {
     # Note use of i. em is wrong in this context.
     my $tag = $narration_mode? 'div': 'span';
     my $spacing = $narration_mode? "\n\n": '';
-    $s =~ s {(\[)\s*(applause|inaudible|not able to hear video)\s*(\])}
+    $s =~ s {(\[)\s*(applause|inaudible|cannot understand speaker|not able to hear video)\s*(\])}
 	    {<$tag class=narration>$spacing\1<i>\2<\/i>\3$spacing<\/$tag>}i;
     return $s;
 }
