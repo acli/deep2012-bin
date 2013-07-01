@@ -26,11 +26,15 @@ sub fixcase ($) {
     $s =~ s/(>>)\s+(\S+)/ $1 . ucfirst($2) /sge;
     $s =~ s/'/’/sg;
     $s =~ s/ (?:--|‑‑) / — /sg;
-    # Plain guesses
+    # Weird transcriptions (or maybe it's because it's all uppercase)
     $s =~ s/\b(i)(?:-|‑)(pad|phone)\b/\1\u\2/sgi;
+    # Pretty sure given the context
+    $s =~ s/\b(crpd)\b/\U\1/g;
+    $s =~ s/\b(room\s\d+)\b/\u\1/g;
+    $s =~ s/\b(donovan|jutta|mike|pina|toronto|treviranus|walgreen)\b/ fix_proper_name($1) /sge;
+    # Plain guesses
     $s =~ s/\b(3d|i)\b/\U\1/sg;
     $s =~ s/\b(u\.s\.)/\U\1/sg;
-    $s =~ s/\b(donovan|jutta|mike|pina|toronto|treviranus|walgreen)\b/ fix_proper_name($1) /sge;
     return $s;
 }
 
@@ -53,7 +57,7 @@ last unless defined $s;
     $buffer .= "\n" if $buffer;
     $buffer .= $s;
 
-    while ($buffer =~ /^(?:(?!\s\s).)+(?:\s{2,}|\n)/s) {
+    while ($buffer =~ /^((?:(?!\s\s|\s*\n+\s*).)+)(?:\s{2,}|\s*\n+\s*)/s) {
 	$buffer = $';
 	print fixcase($&);
     }
