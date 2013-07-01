@@ -24,7 +24,7 @@ sub fixcase ($) {
     $s = ucfirst(lc($s));
     $s =~ s/(>>)(\S[^:]*)(:\s*)(\S+)/ $1 . fix_proper_name($2) . $3 . ucfirst($4) /sge;
     $s =~ s/(>>)\s+(\S+)/ $1 . ucfirst($2) /sge;
-    $s =~ s/ (?:--|‑‑) / — /sg;
+    $s =~ s/(\s+|^)(?:--|‑‑)(\s+)/\1—\2/sg;
     # Weird transcriptions (or maybe it's because it's all uppercase)
     $s =~ s/\b(i)(?:-|‑)(pad|phone)\b/\1\u\2/sgi;
     # Pretty sure given the context
