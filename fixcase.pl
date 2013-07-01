@@ -30,7 +30,7 @@ sub fixcase ($) {
     # Pretty sure given the context
     $s =~ s/\b(crpd|p\&g)\b/\U\1/gi;
     $s =~ s/\b(room\s\d+)\b/\u\1/g;
-    $s =~ s/\b(donovan|jutta|mike|(?:north\s+)?america|pina|richard|rich's|toronto|treviranus|walgreen)\b/ fix_proper_name($1) /sge;
+    $s =~ s/\b(axel\s+leblois|donovan|d'intino|europe|jutta|mike|(?:north\s+)?america|pina|richard|rich's|toronto|treviranus|walgreen)\b/ fix_proper_name($1) /sge;
     $s =~ s/\b(invite\s+)(rich)\b/ $1 . fix_proper_name($2) /sge;
     $s =~ s/'/’/sg; # Do this last
     # Plain guesses
