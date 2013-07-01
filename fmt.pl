@@ -66,13 +66,17 @@ sub end_boilerplate () {
 EOT
 }
 
+binmode(STDIN, ':utf8');
+binmode(STDOUT, ':utf8');
+binmode(STDERR, ':utf8');
+
 start_boilerplate;
 
 for (my $bom_removed = 0;;) {
     my $s = scalar <>;
 last unless defined $s;
     chomp $s;
-    if (!$bom_removed && $s =~ /^\xef\xbb\xbf/) {
+    if (!$bom_removed && $s =~ /^(?:\xef\xbb\xbf|\x{feff})/) {
 	$bom_removed = 1;
 	$s = $';
     }
