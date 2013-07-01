@@ -24,14 +24,15 @@ sub fixcase ($) {
     $s = ucfirst(lc($s));
     $s =~ s/(>>)(\S[^:]*)(:\s*)(\S+)/ $1 . fix_proper_name($2) . $3 . ucfirst($4) /sge;
     $s =~ s/(>>)\s+(\S+)/ $1 . ucfirst($2) /sge;
-    $s =~ s/'/’/sg;
     $s =~ s/ (?:--|‑‑) / — /sg;
     # Weird transcriptions (or maybe it's because it's all uppercase)
     $s =~ s/\b(i)(?:-|‑)(pad|phone)\b/\1\u\2/sgi;
     # Pretty sure given the context
-    $s =~ s/\b(crpd)\b/\U\1/g;
+    $s =~ s/\b(crpd|p\&g)\b/\U\1/gi;
     $s =~ s/\b(room\s\d+)\b/\u\1/g;
-    $s =~ s/\b(donovan|jutta|mike|pina|toronto|treviranus|walgreen)\b/ fix_proper_name($1) /sge;
+    $s =~ s/\b(donovan|jutta|mike|(?:north\s+)?america|pina|richard|rich's|toronto|treviranus|walgreen)\b/ fix_proper_name($1) /sge;
+    $s =~ s/\b(invite\s+)(rich)\b/ $1 . fix_proper_name($2) /sge;
+    $s =~ s/'/’/sg; # Do this last
     # Plain guesses
     $s =~ s/\b(3d|i)\b/\U\1/sg;
     $s =~ s/\b(u\.s\.)/\U\1/sg;
