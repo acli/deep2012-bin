@@ -15,10 +15,11 @@ use vars qw( $monolog );
 
 sub escape ($;$) {
     # Escape the HTML, except that in WordPress > doesn’t really need to be
-    # escaped
+    # escaped and neither does & unless it forms a valid SGML entity
     my($s, $narration_mode) = @_;
     $s = CGI::escapeHTML($s);
     $s =~ s/\&gt;/>/g;
+    $s =~ s/(?!\&amp;(?:\S+);)\&amp;/\&/g;
 
     # Attempt to mark up inaudibles and such
     # Note use of i. em is wrong in this context.
